@@ -1,11 +1,15 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
 import LoginImg from '../../assets/login-image.svg'
 import Logo from '../../assets/logo.svg'
+import Button from '../../components/Button'
+import { useUser } from '../../hooks/UserContext'
 import api from '../../services/api'
 import {
   Container,
@@ -13,12 +17,13 @@ import {
   ContainerItens,
   Label,
   Input,
-  Button,
   SingInlink,
   ErrorMessage
 } from './style'
 
 function Login () {
+  const { putUserData } = useUser()
+
   const schema = Yup.object().shape({
     email: Yup.string().email('Digite um email válido').required('O email é obrigatório'),
     password: Yup.string().required('A senha é obrigatória').min(6, 'No minimo 6 digitos')
@@ -33,12 +38,19 @@ function Login () {
   })
 
   const onSubmit = async clientData => {
-    const response = await api.post('sessions', {
-      email: clientData.email,
-      password: clientData.password
-    })
+    const { data } = await toast.promise(
+      api.post('sessions', {
+        email: clientData.email,
+        password: clientData.password
+      }),
+      {
+        pending: 'Verificando os dados',
+        success: 'Seja bem-vindo(a)',
+        error: 'Verifique o email ou senha'
+      }
+    )
 
-    console.log(response)
+    putUserData(data)
   }
 
   return (
@@ -61,11 +73,18 @@ function Login () {
       />
       <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
-    <Button type= 'submit'>Login</Button>
+    <Button type= 'submit' style= {{ marginTop: 75, marginBottom: 25 }}>
+      Login
+      </Button>
 
     </form>
 
-    <SingInlink>Não possui conta? <a>Inscrever-se</a></SingInlink>
+    <SingInlink>
+      Não possui conta?{'  '}
+       <Link style={{ color: 'white' }} to= '/cadastro'>
+        Inscrever-se
+        </Link>
+      </SingInlink>
 
      </ContainerItens>
     </Container>
