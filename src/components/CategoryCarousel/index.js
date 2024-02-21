@@ -23,8 +23,8 @@ function CategoryCarousel () {
     { width: 1, itemsToShow: 1 },
     { width: 400, itemsToShow: 2 },
     { width: 600, itemsToShow: 3 },
-    { width: 900, itemsToShow: 4 },
-    { width: 1300, itemsToShow: 5 }
+    { width: 900, itemsToShow: 4 }
+    // { width: 1300, itemsToShow: 5 }
   ]
 
   return (
@@ -32,7 +32,7 @@ function CategoryCarousel () {
       <CategoryImg src={Category} alt="logo da categoria" />
 
       <Carousel
-        itemsToShow={5}
+        itemsToShow={4}
         style={{ width: '90%' }}
         breakPoints={breakPoints}
       >
