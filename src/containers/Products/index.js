@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import ProductsLogo from '../../assets/produtosLOGO.svg'
+import ProductsLogo from '../../assets/DanStef.png'
 import { CardProducts } from '../../components'
 import api from '../../services/api'
 import formatCurrency from '../../utils/formatCurrency'
